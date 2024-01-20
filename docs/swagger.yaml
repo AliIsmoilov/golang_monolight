@@ -1,5 +1,5 @@
 definitions:
-  models.ToDo:
+  models.Blog:
     properties:
       created_at:
         type: string
@@ -11,7 +11,7 @@ definitions:
     required:
     - title
     type: object
-  models.ToDoSwagger:
+  models.BlogSwagger:
     properties:
       title:
         minLength: 3
@@ -19,70 +19,88 @@ definitions:
     required:
     - title
     type: object
-  models.ToDosList:
+  models.BlogsList:
     properties:
+      blogs:
+        items:
+          $ref: '#/definitions/models.Blog'
+        type: array
       has_more:
         type: boolean
       page:
         type: integer
       size:
         type: integer
-      todos:
-        items:
-          $ref: '#/definitions/models.ToDo'
-        type: array
       total_count:
         type: integer
       total_pages:
         type: integer
     type: object
+  models.News:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      photo:
+        type: string
+      published_by:
+        type: string
+      title:
+        minLength: 3
+        type: string
+    required:
+    - title
+    type: object
+  models.NewsSwagger:
+    properties:
+      description:
+        type: string
+      photo:
+        type: string
+      published_by:
+        type: string
+      title:
+        minLength: 3
+        type: string
+    required:
+    - title
+    type: object
 info:
   contact: {}
 paths:
-  /health:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"status": "Healthy!"}'
-          schema:
-            type: string
-      summary: Health check endpoint
-      tags:
-      - Health
-  /todos:
+  /blogs:
     post:
       consumes:
       - application/json
-      description: create new todo
+      description: create new blog
       parameters:
       - description: body
         in: body
         name: body
         required: true
         schema:
-          $ref: '#/definitions/models.ToDoSwagger'
+          $ref: '#/definitions/models.BlogSwagger'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.ToDo'
+            $ref: '#/definitions/models.Blog'
         "500":
           description: Internal Server Error
           schema: {}
-      summary: Create new todo
+      summary: CreateBlog new blog
       tags:
-      - ToDos
-  /todos/{id}:
+      - Blog
+  /blogs/{id}:
     delete:
       consumes:
       - application/json
-      description: delete todo
+      description: delete blog
       parameters:
       - description: id
         in: path
@@ -99,13 +117,13 @@ paths:
         "500":
           description: Internal Server Error
           schema: {}
-      summary: Delete todo
+      summary: Delete blog
       tags:
-      - ToDos
+      - Blog
     get:
       consumes:
       - application/json
-      description: Get todo by id
+      description: Get blog by id
       parameters:
       - description: id
         in: path
@@ -118,17 +136,17 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ToDo'
+            $ref: '#/definitions/models.Blog'
         "500":
           description: Internal Server Error
           schema: {}
-      summary: Get todo
+      summary: Get blog
       tags:
-      - ToDos
+      - Blog
     put:
       consumes:
       - application/json
-      description: update new todo
+      description: update new blog
       parameters:
       - description: id
         in: path
@@ -140,25 +158,25 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/models.ToDoSwagger'
+          $ref: '#/definitions/models.BlogSwagger'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ToDoSwagger'
+            $ref: '#/definitions/models.BlogSwagger'
         "500":
           description: Internal Server Error
           schema: {}
-      summary: Update todo
+      summary: Update blog
       tags:
-      - ToDos
-  /todos/list:
+      - Blog
+  /blogs/list:
     get:
       consumes:
       - application/json
-      description: Get all todo
+      description: Get all blog
       parameters:
       - description: title
         in: query
@@ -180,11 +198,36 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ToDosList'
+            $ref: '#/definitions/models.BlogsList'
         "500":
           description: Internal Server Error
           schema: {}
-      summary: Get ToDos
+      summary: Get Blog
       tags:
-      - ToDos
+      - Blog
+  /blogs/news:
+    post:
+      consumes:
+      - application/json
+      description: CreateNews new news
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.NewsSwagger'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.News'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Create new news
+      tags:
+      - News
 swagger: "2.0"

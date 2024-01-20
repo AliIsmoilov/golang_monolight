@@ -10,11 +10,10 @@ version:
 	migrate -database postgres://postgres:postgres@localhost:5432/todo_db?sslmode=disable -path migrations version
 
 migrate_up:
-	migrate -database postgres://postgres:postgres@localhost:5432/todo_db?sslmode=disable -path migrations up 1
+	migrate -path ./migrations -database 'postgres://postgres:12345@0.0.0.0:5432/todo_db?sslmode=disable' up
 
 migrate_down:
-	migrate -database postgres://postgres:postgres@localhost:5432/todo_db?sslmode=disable -path migrations down 1
-
+	migrate -path ./migrations -database 'postgres://postgres:12345@0.0.0.0:5432/todo_db?sslmode=disable' down
 
 # ==============================================================================
 # Docker compose commands

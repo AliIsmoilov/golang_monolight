@@ -4,31 +4,9 @@
         "contact": {}
     },
     "paths": {
-        "/health": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Health"
-                ],
-                "summary": "Health check endpoint",
-                "responses": {
-                    "200": {
-                        "description": "{\"status\": \"Healthy!\"}",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/todos": {
+        "/blogs": {
             "post": {
-                "description": "create new todo",
+                "description": "create new blog",
                 "consumes": [
                     "application/json"
                 ],
@@ -36,9 +14,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "ToDos"
+                    "Blog"
                 ],
-                "summary": "Create new todo",
+                "summary": "CreateBlog new blog",
                 "parameters": [
                     {
                         "description": "body",
@@ -46,7 +24,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.ToDoSwagger"
+                            "$ref": "#/definitions/models.BlogSwagger"
                         }
                     }
                 ],
@@ -54,7 +32,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.ToDo"
+                            "$ref": "#/definitions/models.Blog"
                         }
                     },
                     "500": {
@@ -64,9 +42,9 @@
                 }
             }
         },
-        "/todos/list": {
+        "/blogs/list": {
             "get": {
-                "description": "Get all todo",
+                "description": "Get all blog",
                 "consumes": [
                     "application/json"
                 ],
@@ -74,9 +52,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "ToDos"
+                    "Blog"
                 ],
-                "summary": "Get ToDos",
+                "summary": "Get Blog",
                 "parameters": [
                     {
                         "type": "string",
@@ -103,7 +81,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ToDosList"
+                            "$ref": "#/definitions/models.BlogsList"
                         }
                     },
                     "500": {
@@ -113,9 +91,9 @@
                 }
             }
         },
-        "/todos/{id}": {
-            "get": {
-                "description": "Get todo by id",
+        "/blogs/news": {
+            "post": {
+                "description": "CreateNews new news",
                 "consumes": [
                     "application/json"
                 ],
@@ -123,9 +101,47 @@
                     "application/json"
                 ],
                 "tags": [
-                    "ToDos"
+                    "News"
                 ],
-                "summary": "Get todo",
+                "summary": "Create new news",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.NewsSwagger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.News"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/blogs/{id}": {
+            "get": {
+                "description": "Get blog by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Get blog",
                 "parameters": [
                     {
                         "type": "string",
@@ -139,7 +155,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ToDo"
+                            "$ref": "#/definitions/models.Blog"
                         }
                     },
                     "500": {
@@ -149,7 +165,7 @@
                 }
             },
             "put": {
-                "description": "update new todo",
+                "description": "update new blog",
                 "consumes": [
                     "application/json"
                 ],
@@ -157,9 +173,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "ToDos"
+                    "Blog"
                 ],
-                "summary": "Update todo",
+                "summary": "Update blog",
                 "parameters": [
                     {
                         "type": "string",
@@ -174,7 +190,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.ToDoSwagger"
+                            "$ref": "#/definitions/models.BlogSwagger"
                         }
                     }
                 ],
@@ -182,7 +198,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ToDoSwagger"
+                            "$ref": "#/definitions/models.BlogSwagger"
                         }
                     },
                     "500": {
@@ -192,7 +208,7 @@
                 }
             },
             "delete": {
-                "description": "delete todo",
+                "description": "delete blog",
                 "consumes": [
                     "application/json"
                 ],
@@ -200,9 +216,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "ToDos"
+                    "Blog"
                 ],
-                "summary": "Delete todo",
+                "summary": "Delete blog",
                 "parameters": [
                     {
                         "type": "string",
@@ -228,7 +244,7 @@
         }
     },
     "definitions": {
-        "models.ToDo": {
+        "models.Blog": {
             "type": "object",
             "required": [
                 "title"
@@ -246,7 +262,7 @@
                 }
             }
         },
-        "models.ToDoSwagger": {
+        "models.BlogSwagger": {
             "type": "object",
             "required": [
                 "title"
@@ -258,9 +274,15 @@
                 }
             }
         },
-        "models.ToDosList": {
+        "models.BlogsList": {
             "type": "object",
             "properties": {
+                "blogs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Blog"
+                    }
+                },
                 "has_more": {
                     "type": "boolean"
                 },
@@ -270,17 +292,59 @@
                 "size": {
                     "type": "integer"
                 },
-                "todos": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.ToDo"
-                    }
-                },
                 "total_count": {
                     "type": "integer"
                 },
                 "total_pages": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.News": {
+            "type": "object",
+            "required": [
+                "title"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "published_by": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "minLength": 3
+                }
+            }
+        },
+        "models.NewsSwagger": {
+            "type": "object",
+            "required": [
+                "title"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "published_by": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "minLength": 3
                 }
             }
         }

@@ -14,76 +14,76 @@ import (
 	"github.com/AliIsmoilov/golang_monolight/pkg/utils"
 )
 
-// ToDos handlers
-type todosHandlers struct {
+// Blog handlers
+type blogHandlers struct {
 	cfg     *config.Config
 	todosUC todos.UseCase
 	logger  logger.Logger
 }
 
-// NewToDosHandlers ToDos handlers constructor
-func NewToDosHandlers(cfg *config.Config, todosUC todos.UseCase, logger logger.Logger) todos.Handlers {
-	return &todosHandlers{cfg: cfg, todosUC: todosUC, logger: logger}
+// NewBlogHandlers Blog handlers constructor
+func NewBlogHandlers(cfg *config.Config, todosUC todos.UseCase, logger logger.Logger) todos.Handlers {
+	return &blogHandlers{cfg: cfg, todosUC: todosUC, logger: logger}
 }
 
-// Create
-// @Summary Create new todo
-// @Description create new todo
-// @Tags ToDos
+// CreateBlog
+// @Summary CreateBlog new blog
+// @Description create new blog
+// @Tags Blog
 // @Accept  json
 // @Produce  json
-// @Param body body models.ToDoSwagger true "body"
-// @Success 201 {object} models.ToDo
+// @Param body body models.BlogSwagger true "body"
+// @Success 201 {object} models.Blog
 // @Failure 500 {object} httpErrors.RestErr
-// @Router /todos [post]
-func (h *todosHandlers) Create() echo.HandlerFunc {
+// @Router /blogs [post]
+func (h *blogHandlers) Create() echo.HandlerFunc {
 	return func(c echo.Context) error {
 
-		todo := &models.ToDo{}
+		blog := &models.Blog{}
 
-		if err := utils.SanitizeRequest(c, todo); err != nil {
+		if err := utils.SanitizeRequest(c, blog); err != nil {
 			return utils.ErrResponseWithLog(c, h.logger, err)
 		}
 
-		createdToDo, err := h.todosUC.Create(c.Request().Context(), todo)
+		createdBlog, err := h.todosUC.Create(c.Request().Context(), blog)
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
 
-		return c.JSON(http.StatusCreated, createdToDo)
+		return c.JSON(http.StatusCreated, createdBlog)
 	}
 }
 
 // Update
-// @Summary Update todo
-// @Description update new todo
-// @Tags ToDos
+// @Summary Update blog
+// @Description update new blog
+// @Tags Blog
 // @Accept  json
 // @Produce  json
 // @Param id path string true "id"
-// @Param body body models.ToDoSwagger true "body"
-// @Success 200 {object} models.ToDoSwagger
+// @Param body body models.BlogSwagger true "body"
+// @Success 200 {object} models.BlogSwagger
 // @Failure 500 {object} httpErrors.RestErr
-// @Router /todos/{id} [put]
-func (h *todosHandlers) Update() echo.HandlerFunc {
+// @Router /blogs/{id} [put]
+func (h *blogHandlers) Update() echo.HandlerFunc {
 	return func(c echo.Context) error {
 
-		todosID, err := uuid.Parse(c.Param("id"))
+		blogsID, err := uuid.Parse(c.Param("id"))
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
 
-		comm := &models.ToDo{}
+		comm := &models.Blog{}
 		if err = utils.SanitizeRequest(c, comm); err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
 
-		updatedToDo, err := h.todosUC.Update(c.Request().Context(), &models.ToDo{
-			ToDoID: todosID,
-			Title:  comm.Title,
+		updatedToDo, err := h.todosUC.Update(c.Request().Context(), &models.Blog{
+			ID:    blogsID,
+			Title: comm.Title,
 		})
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
@@ -95,25 +95,25 @@ func (h *todosHandlers) Update() echo.HandlerFunc {
 }
 
 // Delete
-// @Summary Delete todo
-// @Description delete todo
-// @Tags ToDos
+// @Summary Delete blog
+// @Description delete blog
+// @Tags Blog
 // @Accept  json
 // @Produce  json
 // @Param id path string true "id"
 // @Success 200 {string} string	"ok"
 // @Failure 500 {object} httpErrors.RestErr
-// @Router /todos/{id} [delete]
-func (h *todosHandlers) Delete() echo.HandlerFunc {
+// @Router /blogs/{id} [delete]
+func (h *blogHandlers) Delete() echo.HandlerFunc {
 	return func(c echo.Context) error {
 
-		todosID, err := uuid.Parse(c.Param("id"))
+		blogsID, err := uuid.Parse(c.Param("id"))
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
 
-		if err = h.todosUC.Delete(c.Request().Context(), todosID); err != nil {
+		if err = h.todosUC.Delete(c.Request().Context(), blogsID); err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
@@ -123,47 +123,47 @@ func (h *todosHandlers) Delete() echo.HandlerFunc {
 }
 
 // GetByID
-// @Summary Get todo
-// @Description Get todo by id
-// @Tags ToDos
+// @Summary Get blog
+// @Description Get blog by id
+// @Tags Blog
 // @Accept  json
 // @Produce  json
 // @Param id path string true "id"
-// @Success 200 {object} models.ToDo
+// @Success 200 {object} models.Blog
 // @Failure 500 {object} httpErrors.RestErr
-// @Router /todos/{id} [get]
-func (h *todosHandlers) GetByID() echo.HandlerFunc {
+// @Router /blogs/{id} [get]
+func (h *blogHandlers) GetByID() echo.HandlerFunc {
 	return func(c echo.Context) error {
 
-		todosID, err := uuid.Parse(c.Param("id"))
+		blogsID, err := uuid.Parse(c.Param("id"))
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
 
-		todo, err := h.todosUC.GetByID(c.Request().Context(), todosID)
+		blog, err := h.todosUC.GetByID(c.Request().Context(), blogsID)
 		if err != nil {
 			utils.LogResponseError(c, h.logger, err)
 			return c.JSON(httpErrors.ErrorResponse(err))
 		}
 
-		return c.JSON(http.StatusOK, todo)
+		return c.JSON(http.StatusOK, blog)
 	}
 }
 
 // GetAll
-// @Summary Get ToDos
-// @Description Get all todo
-// @Tags ToDos
+// @Summary Get Blog
+// @Description Get all blog
+// @Tags Blog
 // @Accept  json
 // @Produce  json
 // @Param title query string false "title"
 // @Param page query int false "page number" Format(page)
 // @Param size query int false "number of elements per page" Format(size)
-// @Success 200 {object} models.ToDosList
+// @Success 200 {object} models.BlogsList
 // @Failure 500 {object} httpErrors.RestErr
-// @Router /todos/list [get]
-func (h *todosHandlers) GetAll() echo.HandlerFunc {
+// @Router /blogs/list [get]
+func (h *blogHandlers) GetAll() echo.HandlerFunc {
 	return func(c echo.Context) error {
 
 		pq, err := utils.GetPaginationFromCtx(c)
