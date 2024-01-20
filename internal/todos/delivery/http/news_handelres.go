@@ -13,7 +13,7 @@ import (
 // Create
 // @Summary Create new news
 // @Description CreateNews new news
-// @Tags News
+// @Tags NewsHeader
 // @Accept  json
 // @Produce  json
 // @Param body body models.NewsSwagger true "body"

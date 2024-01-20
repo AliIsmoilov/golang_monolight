@@ -112,7 +112,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "News"
+                    "NewsHeader"
                 ],
                 "summary": "Create new news",
                 "parameters": [
