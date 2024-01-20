@@ -12,8 +12,10 @@ func MapToDosRoutes(todoGroup *echo.Group, h todos.Handlers) {
 	// docs.SwaggerInfo.Version = cfg.Version
 	// docs.SwaggerInfo.Schemes = []string{cfg.HTTPScheme}
 	todoGroup.POST("", h.Create())
-	todoGroup.GET("/list", h.GetAll())
 	todoGroup.DELETE("/:id", h.Delete())
 	todoGroup.PUT("/:id", h.Update())
+	todoGroup.GET("/list", h.GetAll())
 	todoGroup.GET("/:id", h.GetByID())
+
+	todoGroup.POST("/news", h.CreateNews())
 }

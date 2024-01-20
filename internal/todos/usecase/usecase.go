@@ -3,35 +3,34 @@ package usecase
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/AliIsmoilov/golang_monolight/config"
 	"github.com/AliIsmoilov/golang_monolight/internal/models"
 	"github.com/AliIsmoilov/golang_monolight/internal/todos"
 	"github.com/AliIsmoilov/golang_monolight/pkg/logger"
 	"github.com/AliIsmoilov/golang_monolight/pkg/utils"
+	"github.com/google/uuid"
 )
 
 // ToDos UseCase
 type todosUC struct {
 	cfg       *config.Config
-	todosRepo todos.Repository
+	blogsRepo todos.BlogRepository
 	logger    logger.Logger
 }
 
 // ToDos UseCase constructor
-func NewToDosUseCase(cfg *config.Config, todosRepo todos.Repository, logger logger.Logger) todos.UseCase {
-	return &todosUC{cfg: cfg, todosRepo: todosRepo, logger: logger}
+func NewToDosUseCase(cfg *config.Config, blogsRepo todos.BlogRepository, logger logger.Logger) todos.UseCase {
+	return &todosUC{cfg: cfg, blogsRepo: blogsRepo, logger: logger}
 }
 
 // Create todo
-func (u *todosUC) Create(ctx context.Context, todo *models.ToDo) (*models.ToDo, error) {
-	return u.todosRepo.Create(ctx, todo)
+func (u *todosUC) Create(ctx context.Context, blog *models.Blog) (*models.Blog, error) {
+	return u.blogsRepo.Create(ctx, blog)
 }
 
 // Update todo
-func (u *todosUC) Update(ctx context.Context, todo *models.ToDo) (*models.ToDo, error) {
-	updatedToDo, err := u.todosRepo.Update(ctx, todo)
+func (u *todosUC) Update(ctx context.Context, todo *models.Blog) (*models.Blog, error) {
+	updatedToDo, err := u.blogsRepo.Update(ctx, todo)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +41,7 @@ func (u *todosUC) Update(ctx context.Context, todo *models.ToDo) (*models.ToDo, 
 // Delete todo
 func (u *todosUC) Delete(ctx context.Context, todoID uuid.UUID) error {
 
-	if err := u.todosRepo.Delete(ctx, todoID); err != nil {
+	if err := u.blogsRepo.Delete(ctx, todoID); err != nil {
 		return err
 	}
 
@@ -50,12 +49,17 @@ func (u *todosUC) Delete(ctx context.Context, todoID uuid.UUID) error {
 }
 
 // GetByID todo
-func (u *todosUC) GetByID(ctx context.Context, todoID uuid.UUID) (*models.ToDo, error) {
+func (u *todosUC) GetByID(ctx context.Context, blogID uuid.UUID) (*models.Blog, error) {
 
-	return u.todosRepo.GetByID(ctx, todoID)
+	return u.blogsRepo.GetByID(ctx, blogID)
 }
 
 // GetAll todos
-func (u *todosUC) GetAll(ctx context.Context, title string, query *utils.PaginationQuery) (*models.ToDosList, error) {
-	return u.todosRepo.GetAll(ctx, title, query)
+func (u *todosUC) GetAll(ctx context.Context, title string, query *utils.PaginationQuery) (*models.BlogsList, error) {
+	return u.blogsRepo.GetAll(ctx, title, query)
+}
+
+// CreateNews
+func (u *todosUC) CreateNews(ctx context.Context, news *models.News) (*models.News, error) {
+	return u.blogsRepo.CreateNews(ctx, news)
 }

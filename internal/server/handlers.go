@@ -24,11 +24,10 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 
 	// Init repositories
 	cRepo := todosRepository.NewToDosRepository(s.db)
-
 	commUC := todosUseCase.NewToDosUseCase(s.cfg, cRepo, s.logger)
 
 	// Init handlers
-	todoHandlers := todosHttp.NewToDosHandlers(s.cfg, commUC, s.logger)
+	todoHandlers := todosHttp.NewBlogHandlers(s.cfg, commUC, s.logger)
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Title = "ToDo API"
 	docs.SwaggerInfo.Description = "ToDo REST API."
@@ -61,7 +60,7 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 	v1 := e.Group("/v1")
 
 	health := v1.Group("/health")
-	todoGroup := v1.Group("/todos")
+	todoGroup := v1.Group("/blogs")
 
 	todosHttp.MapToDosRoutes(todoGroup, todoHandlers)
 
