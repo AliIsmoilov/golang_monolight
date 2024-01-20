@@ -229,5 +229,5 @@ paths:
           schema: {}
       summary: Create new news
       tags:
-      - News
+      - NewsHeader
 swagger: "2.0"
