@@ -14,7 +14,7 @@ import (
 	"github.com/AliIsmoilov/golang_monolight/pkg/utils"
 )
 
-// ToDos Repository
+// Blog Repository
 type blogsRepo struct {
 	db *sqlx.DB
 }

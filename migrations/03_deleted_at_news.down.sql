@@ -1,0 +1,1 @@
+ALTER TABLE news DROP COLUMN IF EXIST deleted_at;

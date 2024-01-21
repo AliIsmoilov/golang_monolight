@@ -16,6 +16,14 @@ type UseCase interface {
 	Delete(ctx context.Context, blogID uuid.UUID) error
 	GetByID(ctx context.Context, blogID uuid.UUID) (*models.Blog, error)
 	GetAll(ctx context.Context, title string, query *utils.PaginationQuery) (*models.BlogsList, error)
+}
 
-	CreateNews(ctx context.Context, news *models.News) (*models.News, error)
+// News use case
+type NewsUseCase interface {
+	Create(ctx context.Context, News *models.News) (*models.News, error)
+	Update(ctx context.Context, News *models.News) (*models.News, error)
+	Delete(ctx context.Context, NewsID uuid.UUID) error
+	SoftDelete(ctx context.Context, NewsID uuid.UUID) error
+	GetByID(ctx context.Context, NewsID uuid.UUID) (*models.News, error)
+	GetAll(ctx context.Context, title string, query *utils.PaginationQuery) (*models.NewsList, error)
 }

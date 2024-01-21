@@ -11,12 +11,12 @@ import (
 	"github.com/AliIsmoilov/golang_monolight/pkg/utils"
 )
 
-// @title Go ToDo app
+// @title Go app
 // @version 1.0
-// @description Golang TODO app
-// @contact.name Dilmurod Yangiboev
-// @contact.url https://github.com/Yangiboev
-// @contact.email dilmurod.yangiboev@gmail.com
+// @description Golang app
+// @contact.name Alimadad Ismoilov
+// @contact.url https://github.com/AliIsmoilov
+// @contact.email alimadadismoilov@gmail.com
 // @BasePath /api/v1
 func main() {
 	log.Println("Starting api server")

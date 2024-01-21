@@ -26,11 +26,15 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 	cRepo := todosRepository.NewToDosRepository(s.db)
 	commUC := todosUseCase.NewToDosUseCase(s.cfg, cRepo, s.logger)
 
+	nRepo := todosRepository.NewNewsRepository(s.db)
+	newsUC := todosUseCase.NewNewsUseCase(s.cfg, nRepo, s.logger)
+	newsHandlers := todosHttp.NewNewsHandlers(s.cfg, newsUC, s.logger)
+
 	// Init handlers
 	todoHandlers := todosHttp.NewBlogHandlers(s.cfg, commUC, s.logger)
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Title = "ToDo API"
-	docs.SwaggerInfo.Description = "ToDo REST API."
+	docs.SwaggerInfo.Title = "App API"
+	docs.SwaggerInfo.Description = "REST API."
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.BasePath = "/v1"
 
@@ -61,8 +65,10 @@ func (s *Server) MapHandlers(e *echo.Echo) error {
 
 	health := v1.Group("/health")
 	todoGroup := v1.Group("/blogs")
-
 	todosHttp.MapToDosRoutes(todoGroup, todoHandlers)
+
+	newsGroup := v1.Group("/news")
+	todosHttp.MapNewsRoutes(newsGroup, newsHandlers)
 
 	health.GET("", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{"status": "healthy!"})
