@@ -58,8 +58,3 @@ func (u *todosUC) GetByID(ctx context.Context, blogID uuid.UUID) (*models.Blog, 
 func (u *todosUC) GetAll(ctx context.Context, title string, query *utils.PaginationQuery) (*models.BlogsList, error) {
 	return u.blogsRepo.GetAll(ctx, title, query)
 }
-
-// CreateNews
-func (u *todosUC) CreateNews(ctx context.Context, news *models.News) (*models.News, error) {
-	return u.blogsRepo.CreateNews(ctx, news)
-}

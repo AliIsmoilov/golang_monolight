@@ -16,6 +16,14 @@ func MapToDosRoutes(todoGroup *echo.Group, h todos.Handlers) {
 	todoGroup.PUT("/:id", h.Update())
 	todoGroup.GET("/list", h.GetAll())
 	todoGroup.GET("/:id", h.GetByID())
+}
 
-	todoGroup.POST("/news", h.CreateNews())
+// Map news routes
+func MapNewsRoutes(newsGroup *echo.Group, h todos.NewsHandlers) {
+	newsGroup.POST("", h.Create())
+	newsGroup.DELETE("/:id", h.Delete())
+	newsGroup.DELETE("/soft/:id", h.SoftDelete())
+	newsGroup.PUT("/:id", h.Update())
+	newsGroup.GET("/list", h.GetAll())
+	newsGroup.GET("/:id", h.GetByID())
 }
