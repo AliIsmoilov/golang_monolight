@@ -1,4 +1,4 @@
-### Golang [Golang TODO app](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) 🚀
+### Golang [Golang app](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) 🚀
 
 #### 👨‍💻 Full list what has been used:
 * [echo](https://github.com/labstack/echo) - Web framework
